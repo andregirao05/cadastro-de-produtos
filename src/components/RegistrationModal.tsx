@@ -16,16 +16,31 @@ import {
   NumberInputField,
   NumberInputStepper,
 } from "@chakra-ui/react";
-
+import { useState } from "react";
 import { RiSendPlane2Line } from "react-icons/ri";
+import { useProducts } from "../hooks/useProducts";
+
 
 interface RegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOpen: () => void;
+  typeOfModalOpenig: "create" | "edit";
 }
 
-export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
+export function RegistrationModal({ isOpen, onClose, typeOfModalOpenig }: RegistrationModalProps) {
+  
+  const { createProduct, modifyNameProduct, modifyQuantityProduct } = useProducts()
+  const [name, setName] = useState<string>("")
+  const [quantity, setQuantity] = useState<number>(0)
+    
+  function ChooseModal(type : 'create' | 'edit'){
+    if (type === 'create'){
+      createProduct(name, quantity)
+    }else{
+      
+    }
+  } 
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay onClick={onClose} />
@@ -38,10 +53,10 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
 
         <ModalBody>
           <Flex flexDir="column" gridGap="8px">
-            <Input placeholder="Name" />
+            <Input value={name} placeholder="Name" onChange={(e)=>setName(e.target.value)} />
 
-            <NumberInput>
-              <NumberInputField placeholder="Quantity" />
+            <NumberInput value={quantity} onChange={(stringValue)=>setQuantity(Number(stringValue))}  >
+              <NumberInputField  placeholder="Quantity" />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
@@ -51,7 +66,7 @@ export function RegistrationModal({ isOpen, onClose }: RegistrationModalProps) {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" leftIcon={<RiSendPlane2Line />}>
+          <Button colorScheme="blue" leftIcon={<RiSendPlane2Line />} >
             Submit
           </Button>
         </ModalFooter>

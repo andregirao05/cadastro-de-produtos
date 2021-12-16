@@ -1,9 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
-
+import {ControlProductsProvider} from "../hooks/useProducts"
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <Component {...pageProps} />
+      <ControlProductsProvider>
+        <Component {...pageProps} />
+      </ControlProductsProvider>
     </ChakraProvider>
   );
 }

@@ -4,11 +4,20 @@ import { BiEditAlt } from "react-icons/bi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
 interface ProductRowProps {
+  setName: (name: string) => void;
+  setQuantity: (quantity: number) => void
+  setSlug: (slug: string) => void
   product: Product;
-  onOpenModal: () => void;
 }
 
-export function ProductRow({ product, onOpenModal }: ProductRowProps) {
+export function ProductRow({ setName, setQuantity, setSlug, product }: ProductRowProps) {
+  
+  const handleOnClick = () => {
+    setName(product.name);
+    setQuantity(product.quantity);
+    setSlug(product.slug)
+  }
+  
   return (
     <Tr>
       <Td>{product.slug}</Td>
@@ -20,7 +29,7 @@ export function ProductRow({ product, onOpenModal }: ProductRowProps) {
             variant="outline"
             colorScheme="green"
             leftIcon={<BiEditAlt />}
-            onClick={onOpenModal}
+            onClick={ handleOnClick }
           >
             Edit
           </Button>
